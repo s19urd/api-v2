@@ -143,7 +143,15 @@ class OpenAPI2Slate {
 				fputs( $index, "## The " . $object_name . " object\r\n" );
 				fputs( $index, $tmp->description . "\r\n\r\n" );
 				$this->object_ref($index, $schema);
-			}
+			}else{
+                $tmp_name = $this->openapi->definitions->{substr($object_name, strpos($object_name, " ") + 1)};
+                $tmp_schema = $this->get_schema( $tmp_name );
+                if($tmp_schema){
+                    fputs( $index, "## The " . $object_name . " object\r\n" );
+                    fputs( $index, $tmp_name->description . "\r\n\r\n" );
+                    $this->object_ref($index, $tmp_schema);
+                }
+            }
 
 			fclose( $index );
 
@@ -565,6 +573,10 @@ class OpenAPI2Slate {
 		if ( is_object( $schema ) && property_exists( $schema, 'type' ) && $schema->type === 'object' ) {
 			return $this->convert_schema_to_json( $schema->properties, $json_encode, $required_only );
 		}
+		
+		if ( is_object( $schema ) && property_exists( $schema, 'type' ) && $schema->type === 'string' ) {
+            return "string";
+        }
 
 		$tmp = new stdClass();
 
@@ -652,12 +664,14 @@ $options = array(
 	),
 	'append_includes'  => array(
 		'appendix/index',
+		'appendix/master_account',
 		'appendix/recurrence',
 		'appendix/plans',
 		'appendix/lists/index',
 		'appendix/lists/state',
 		'appendix/lists/country',
 		'appendix/lists/timezone',
+		'appendix/lists/callout_countries',
 		'appendix/lists/tollfree_countries',
 		'appendix/lists/premium_countries'
 	),

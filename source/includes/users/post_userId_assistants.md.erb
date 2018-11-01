@@ -1,6 +1,6 @@
-## Add a user's assistant
+## Add assistants
 
-Add an assistant to a user
+Add assistants to a user
 
 > Definition
 
@@ -11,7 +11,15 @@ POST https://api.zoom.us/v2/users/{userId}/assistants
 > Example Request
 
 ```shell
-$ curl https://api.zoom.us/v2/users/{userId}/assistants
+$ curl https://api.zoom.us/v2/users/{userId}/assistants \
+   -d '{
+    "assistants": [
+        {
+            "id": "string",
+            "email": "string"
+        }
+    ]
+}'
 ```
 
 > Example Response
@@ -22,7 +30,8 @@ $ curl https://api.zoom.us/v2/users/{userId}/assistants
 
 ```json
 {
-    "email_or_id": "string"
+    "ids": "string",
+    "add_at": "string [date-time]"
 }
 ```
 
@@ -32,5 +41,5 @@ userId **required** | The user ID or email address
 
 Body Arguments | &nbsp;
 --- | ---
-email_or_id *optional* | ID or Email of assistant
+assistants *optional*<div class="maximum">30</div> | List of User's assistants
 

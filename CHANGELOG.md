@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## For the latest Changelog in our APIs please see our developer site
+- https://devdocs.zoom.us/guides/welcome/recent-updates
+
 ## 2017-05-20
 
 ### Added
